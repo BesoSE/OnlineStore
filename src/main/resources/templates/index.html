@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="header::head"></div>
+</head>
+<body>
+<nav th:replace="header::nav"></nav><br>
+<br>
+<div class="container">
+    <h1 th:text="${product.title}"></h1>
+
+        <img  th:src="@{'/image?id='+${product.id}}" alt="" style="width:400px">
+
+            <h3>Cijena: <span th:text="${product.price}"></span></h3>
+          <h4>Opis</h4>
+            <p th:text="${product.description}"></p>
+
+    <h5>Autor: <a th:href="@{/user/{id}(id=${product.author.id})}"> <span th:text="${product.author.firstName}"></span> <span th:text="${product.author.lastName}"></span></a> </h5>
+
+    <div sec:authorize="isAuthenticated()">
+        <div th:if="${#authentication.getPrincipal().getUsername()==product.author.email}">
+
+            <a th:href="@{/delete/{id}(id=${product.id})}" class="btn btn-danger">Obrisi</a>
+            <a th:href="@{/editproduct/{id}(id=${product.id})}" class="btn btn-primary">Uredi artikal</a>
+            <div th:if="${product.status==true}">
+            <a th:href="@{/status/{id}(id=${product.id})}" class="btn btn-success">Prodan</a>
+            </div>
+            <div th:if="${product.status==false}">
+                <a th:href="@{/status/{id}(id=${product.id})}" class="btn btn-danger">Aktiviraj</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div sec:authorize="isAuthenticated()">
+        <div th:if="${#authentication.getPrincipal().getUsername()!=product.author.email}">
+            <div th:if="${product.status==true}">
+        <a th:href="@{/addToCart/{id}(id=${product.id})}" class="btn btn-success">Dodaj u korpu</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

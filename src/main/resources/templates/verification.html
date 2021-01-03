@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="header::head"></div>
+</head>
+<body>
+    <div class="container">
+        <h3 th:text="${title}"></h3>
+        <p>Hvala vam na registraciji. Kliknite na dugme Potvrdi email da potvrdite vasu email adresu. </p>
+        <a th:href="${link}" class="btn btn-success"> Potvrdi email</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="header::head"></div>
+</head>
+<body>
+<nav th:replace="header::nav"></nav>
+
+<div class = "container">
+    <div class = "row">
+        <div class="col-md-6 col-lg-6 mb-4">
+            <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Naziv artikla</th>
+                <th scope="col">Cijena</th>
+
+            </tr>
+
+            </thead>
+            <tbody >
+            <tr th:each="pr:${products}">
+
+                <td th:text="${pr.title}"></td>
+                <td th:text="${pr.price}"></td>
+
+
+
+            </tr>
+
+            </tbody>
+        </table>
+        </div>
+        <div class="col-md-6 col-lg-6 mb-4">
+            <table class="table">
+                <thead>
+
+                <tr>
+                    <th scope="col">Količina</th>
+                    <th scope="col">Akcija</th>
+
+                </tr>
+                </thead>
+                <tbody >
+
+                <tr th:each="p:${purchaseitems}">
+                    <td th:text="${p.count}"></td>
+
+                    <td><a th:href="@{/deletePurchaseItem/{id}(id=${p.id})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+
+
+
+        <div th:if="${products.size()!=0}">
+
+         <form th:action="@{/finishPurchase}" th:object="${purchase}" method="post">
+
+             <div class="form-group">
+                 <label class="control-label" for="comment"> Komentar </label>
+                 <input id="comment" class="form-control" th:field="*{comment}"
+                         />
+             </div>
+             <div class="form-group">
+                 <input type="submit" value="Kupi">
+             </div>
+         </form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

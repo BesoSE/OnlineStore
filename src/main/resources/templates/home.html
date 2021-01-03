@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+        <div th:replace="header::head"></div>
+</head>
+<body>
+<nav th:replace="header::nav"></nav>
+
+<div class="container">
+
+    <div class="row">
+        <div>
+            <h4>Sortiraj</h4>
+            <a th:href="@{'/page/'+${currentPage}+'?sortField=title&sortDir='+${reverseSortDir}}">Naslov</a>&nbsp;
+            <a  th:href="@{'/page/'+${currentPage}+'?sortField=author&sortDir='+${reverseSortDir}}">Autor</a>&nbsp;
+            <a th:href="@{'/page/'+${currentPage}+'?sortField=date&sortDir='+${reverseSortDir}}">Datum</a>
+        </div>
+
+
+            <th:block th:each="p:${listProducts}">
+                <div class="col-md-6 col-lg-4 mb-4" th:if="${p.status==true}">
+
+            <a th:href="@{/product/{id}(id=${p.id})}">
+                <div class="card-listing-prewiev">
+                <img th:src="@{'/image?id='+${p.id}}" class="card-img-top" style="width:100px;height: 100px;">
+
+                    </div>
+                    <div class="card-body">
+                        <div class="listing-heading-text-center">
+                            <h2 th:text="${p.title}"></h2>
+                        </div>
+
+                    </div>
+                    </a>
+
+                    <hr>
+                    </div>
+            </th:block>
+
+
+    </div>
+    <div th:if="${totalPages>1}">
+        <div class="row col-sm-10">
+            <div class="col-sm-2">
+                Ukupno artikala: [[${totalItems}]]
+            </div>
+            <div class="col-sm-1">
+                <a th:if="${currentPage>1}" th:href="@{'/page/'+${currentPage-1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}">Prethodna</a>
+                <span th:unless="${currentPage>1}">Prethodna</span>
+            </div>
+            <div class="col-sm-3">
+                <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+                    <a th:if="${currentPage!=i}" th:href="@{'/page/'+${i}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}">[[${i}]]</a>
+                    <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+                </span>
+            </div>
+            <div class="col-sm-1">
+                <a th:if="${currentPage<totalPages}" th:href="@{'/page/'+${currentPage+1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}">Sljedca</a>
+                <span th:unless="${currentPage<totalPages}">Sljedeca</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage<totalPages}" th:href="@{'/page/'+${totalPages}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}">Zadnja</a>
+                <span th:unless="${currentPage<totalPages}">Zadnja</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

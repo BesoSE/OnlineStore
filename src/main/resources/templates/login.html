@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="header::head"></div>
+</head>
+<body>
+<nav th:replace="header::nav"></nav><br>
+<br>
+
+
+<div class = "container">
+    <div class = "row">
+        <div class = "col-md-6 col-md-offset-3">
+
+            <h1> User Login Page </h1>
+            <form th:action="@{/login}" method="post"  >
+                <!-- error message -->
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        Pogresan email ili sifra, ili provjerite svoj email za potvrdu istog.
+                    </div>
+                </div>
+                <div th:if="${message}">
+                    <div class="alert alert-success">
+                       [[${message}]]
+                    </div>
+                </div>
+                <!-- Logout message
+                <div th:if="${param.logout}">
+                    <div class="alert alert-success">You have been logged out </div>
+
+                </div>
+-->
+                <div class="form-group">
+                    <label for="email">Email: </label>
+                    <input type="email" class="form-control" id="email" name="username" placeholder="Email" required autofocus="autofocus">
+
+                </div>
+                <div class="form-group">
+                    <label for="password">Sifra: </label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required autofocus="autofocus">
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class = "col-md-6 col-md-offset-3">
+
+                            <input type="submit" class="form-control btn btn-primary"  name="loginSubmit" value="Login" >
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="form-group">
+                <span>New user? <a th:href="@{/registration}">Register here</a></span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
